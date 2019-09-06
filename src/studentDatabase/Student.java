@@ -6,10 +6,11 @@ public class Student {
 	private String firstName;
 	private String lastName;
 	private int studentYear;
-	private int studentID;
-	private String course;
+	private String studentID;
+	private String courses = null;
 	private int tuitionBalance;
-	private int defCourseCost = 600;
+	private static int defCourseCost = 600;
+	private static int id = 1000;
 	
 	//Constructor
 	public Student()
@@ -23,31 +24,57 @@ public class Student {
 		
 		System.out.print("1 - Freshman\n2 - Sophomore\n3 - Junior\n4 - Senior\nEnter Student year: ");
 		this.studentYear = in.nextInt();
-		System.out.println(firstName + " " + lastName + " " + studentYear);
+		
+		
+		setStudentID();
+		
+		System.out.println(firstName + " " + lastName + " " + studentYear + " " + studentID);
+		
+		
 	}
 	
 	//Generate ID
-	private void GenerateID(String firstName, String lastName, int studentYear)
+	private void setStudentID()
 	{
-		
+		//Work with static variable because it is valid for the whole class, rather than just an instance of the class
+		//Grade level + ID
+		id++;
+		studentID = studentYear + "" + id;	
 	}
 	//Enroll in courses
-	private String EnrollCourses(int studentID)
+	public void EnrollCourses()
 	{
-		return "Successfully Enrolled";
+		do{
+			System.out.print("Enter course to enroll (Q to quit): ");
+			Scanner in = new Scanner(System.in);
+			String course = in.nextLine();
+			if(!course.equals("Q"))
+			{
+				courses = courses + "\n" + course;
+				tuitionBalance = tuitionBalance + defCourseCost;
+			}
+			else {break;}
+			
+		} while (1 != 0);
+		System.out.println("Enrolled in: " + courses);
+		
+		
+		
 	}
 	//View balance
-	private int ViewBalance(int studentID)
+	public void viewBalance()
 	{
-		return tuitionBalance;
+		 System.out.println("Tuition Balance: " + tuitionBalance);
 	}
 	//Pay Tuition
-	private String PayTuition(int studentID, int tuitionBalance)
+	public void PayTuition(int payment)
 	{
-		return "Transaction Successful";
+		tuitionBalance = tuitionBalance - payment;
+		System.out.println("Transaction Successful.");
+		viewBalance();
 	}
 	//Show status
-	private void ShowStatus(int studentID)
+	public void ShowStatus(int studentID)
 	{
 		
 	}
