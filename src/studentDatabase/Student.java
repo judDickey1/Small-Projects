@@ -7,7 +7,7 @@ public class Student {
 	private String lastName;
 	private int studentYear;
 	private String studentID;
-	private String courses = null;
+	private String courses = "";
 	private int tuitionBalance;
 	private static int defCourseCost = 600;
 	private static int id = 1000;
@@ -15,6 +15,7 @@ public class Student {
 	//Constructor
 	public Student()
 	{
+		//Add rules to define acceptable input for name(non-numerics) and year(only numerics)
 		Scanner in = new Scanner(System.in);
 		System.out.print("Enter Student first name: ");
 		this.firstName = in.nextLine();
@@ -25,11 +26,7 @@ public class Student {
 		System.out.print("1 - Freshman\n2 - Sophomore\n3 - Junior\n4 - Senior\nEnter Student year: ");
 		this.studentYear = in.nextInt();
 		
-		
 		setStudentID();
-		
-		System.out.println(firstName + " " + lastName + " " + studentYear + " " + studentID);
-		
 		
 	}
 	
@@ -44,38 +41,46 @@ public class Student {
 	//Enroll in courses
 	public void EnrollCourses()
 	{
+		//Add error checking for acceptable input
 		do{
 			System.out.print("Enter course to enroll (Q to quit): ");
 			Scanner in = new Scanner(System.in);
 			String course = in.nextLine();
 			if(!course.equals("Q"))
 			{
-				courses = courses + "\n" + course;
+				courses = courses + "\n  " + course;
 				tuitionBalance = tuitionBalance + defCourseCost;
 			}
 			else {break;}
 			
 		} while (1 != 0);
-		System.out.println("Enrolled in: " + courses);
-		
+		viewBalance();
 		
 		
 	}
 	//View balance
 	public void viewBalance()
 	{
-		 System.out.println("Tuition Balance: " + tuitionBalance);
+		 System.out.println("Current Tuition Balance: " + tuitionBalance);
 	}
 	//Pay Tuition
-	public void PayTuition(int payment)
+	public void PayTuition()
 	{
+		System.out.print("Please enter payment amount: ");
+		Scanner in = new Scanner(System.in);
+		int payment = in.nextInt();
+		//add error checking for tuitionBalance < 0
 		tuitionBalance = tuitionBalance - payment;
-		System.out.println("Transaction Successful.");
+		System.out.println("Transaction Successful. Thank you for your payment of $" + payment);
 		viewBalance();
+		
 	}
 	//Show status
-	public void ShowStatus(int studentID)
+	public String ShowStatus()
 	{
-		
+		return ("\nName: " + firstName + " " + lastName + 
+				"\nID: " + studentID +
+				"\nCourses Enrolled: " + courses + 
+				"\nBalance: $" + tuitionBalance + "\n");
 	}
 }
